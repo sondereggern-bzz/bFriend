@@ -1,2 +1,2 @@
 # biFriends
-biFriends Project
+bFriends Project
