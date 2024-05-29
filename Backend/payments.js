@@ -1,22 +1,59 @@
-/*
-  AUTHOR:               Robin Trachsel
-  DATE:                 28.05.2024
-  DESCRIPTION:          JS-Server: Endpoints for /payments
+const express = require('express');
+const mysql = require('mysql2');
+const axios = require('axios');
+const router = express.Router();
 
-  Endpoints:
-  - "/:name"
-    GET: Get currency by id (e.g. CHF, EUR, USD)
-*/
+const pool = mysql.createPool({
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'bfriend_database',
+});
 
-const express = require('express')
+// POST /api/payments
+router.post('/', (req, res) => {
+    const { prename, name, iban, bic } = req.body;
 
-const router = express.Router()
+    if (!prename || !name || !iban || !bic) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
 
-router.get('/:name', (req, res) => {
-    // called when GET /api/payments/:id
-    // :name is the currency name (e.g. CHF, EUR, USD) with which the payment is made
-    // this function calls the free 
-    // https://app.freecurrencyapi.com/dashboard
-})
+    pool.query(
+        'INSERT INTO Payment (prename, name, iban, bic) VALUES (?, ?, ?, ?)',
+        [prename, name, iban, bic],
+        (error, results) => {
+            if (error) {
+                console.error('Database error:', error);
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+            res.status(201).json({ message: 'Payment information added successfully', id: results.insertId });
+        }
+    );
+});
 
-module.exports = router
+// GET /api/payments/:name
+router.get('/:name', async (req, res) => {
+    const currencyName = req.params.name.toUpperCase();
+
+    try {
+        const response = await axios.get(`https://api.freecurrencyapi.com/v1/latest`, {
+            params: {
+                apikey: process.env.CURRENCY_API_KEY,
+                base_currency: 'USD',
+                currencies: currencyName
+            }
+        });
+
+        if (response.data && response.data.data && response.data.data[currencyName]) {
+            const exchangeRate = response.data.data[currencyName];
+            res.status(200).json({ currency: currencyName, exchangeRate });
+        } else {
+            res.status(404).json({ error: 'Currency not found' });
+        }
+    } catch (error) {
+        console.error('API error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+module.exports = router;
