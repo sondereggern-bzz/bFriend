@@ -19,33 +19,28 @@ const crypto = require("node:crypto");
 
 const router = express.Router();
 
-const users = [
-    {
-        email: '',
-        password: 'm295'
-    }
-];
-
-const verifyAuth = (req, res, next) => {
+function verifyAuth(req, res, next) {
     if (req.session.authenticated) {
-        next();
+        next()
     } else {
-        res.status(401).json({ error: 'Unauthorized' });
+        res.status(401).json({ error: 'Unauthorized' })
     }
-};
-
-const queryUser = (email, password) => {
-    // query user from database
-    return true
 }
 
-const verifyAdmin = (req, res, next) => {
+function verifyAdmin(req, res, next) {
     if (req.session.authenticated && req.session.userRole && req.session.userRole == "Admin") {
-        next();
+        next()
     } else {
-        return res.sendStatus();
+        return res.sendStatus()
     }
-};
+}
+
+async function findLogin(email, password) {
+    const SQL = `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`
+    const RESULT = await sqlQuery(SQL)
+
+    return RESULT[0]
+}
 
 const sha256 = (key) => {
     return crypto.createHash('sha256').update(key).digest('hex');
