@@ -23,10 +23,11 @@
     DELETE: Delete feature by id
 */
 
-const express = require('express')
-const { verifyAuth, verifyAdmin } = require('./authentifizierung')
+const express = require('express');
+const verifyAuth = require('./authentifizierung');
+const verifyAdmin = require('./authentifizierung');
 
-const router = express.Router()
+const router = express.Router();
 
 router.get('/verify', verifyAuth, (req, res) => {
   if (req.session.authenticated && req.session.userRole && req.session.userRole == "Admin") {
