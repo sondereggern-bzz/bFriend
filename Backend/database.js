@@ -1,12 +1,7 @@
 /*
   AUTHOR:               Robin Trachsel
   DATE:                 28.05.2024
-  DESCRIPTION:          JS-Server: Endpoints for /matches
-
-  Endpoints:
-  - "/"
-    GET: Get all matches
-    POST: Create a new match
+  DESCRIPTION:          To access the database
 */
 
 const MYSQL = require('mysql');
@@ -14,7 +9,7 @@ const MYSQL = require('mysql');
 const credentials = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
+    password: process.env.DB_PASSWORD || 'MysRob04.',
     database: process.env.DB_NAME || 'bfriend_database'
 }
 
