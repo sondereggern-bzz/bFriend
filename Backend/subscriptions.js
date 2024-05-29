@@ -1,5 +1,5 @@
 /*
-  VERSION:              Robin Trachsel
+  AUTHOR:               Robin Trachsel
   DATE:                 28.05.2024
   DESCRIPTION:          JS-Server: Endpoints for /subscriptions
 

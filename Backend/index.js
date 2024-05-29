@@ -1,5 +1,5 @@
 /*
-  VERSION:              Robin Trachsel
+  AUTHOR:              Robin Trachsel
   DATE:                 28.05.2024
   DESCRIPTION:          JS-Server that links every JavaScript file together to build the backend
 */
