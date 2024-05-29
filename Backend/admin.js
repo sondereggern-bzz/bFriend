@@ -28,7 +28,7 @@ const verifyAuth = require('./authentifizierung')
 
 const router = express.Router()
 
-router.put('/users/:id/lock', verifyAuth, (req, res) => {
+router.put('/users/:id/delete', verifyAuth, (req, res) => {
     // called when PUT /api/admin/users/:id/lock
 })
 

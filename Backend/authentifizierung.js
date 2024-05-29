@@ -18,13 +18,6 @@ const express = require('express')
 
 const router = express.Router()
 
-const users = [
-    {
-        email: '',
-        password: 'm295'
-    }
-]
-
 function verifyAuth(req, res, next) {
     if (req.session.authenticated) {
         next()
@@ -33,10 +26,15 @@ function verifyAuth(req, res, next) {
     }
 }
 
-router.post('/login', (req, res) => {
+function queryUser(email, password) {
+    // query user from database
+    return true
+}
+
+router.post('/login', async (req, res) => {
     const { email } = req.body
     const { password } = req.body
-    const user = users.find((login) => email && login.password === password)
+    const user = await express.queryUser(email, password)
 
     if (user) {
         req.session.authenticated = true
