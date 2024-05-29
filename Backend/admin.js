@@ -46,6 +46,9 @@ router.put('/users/:id/unlock', verifyAuth, verifyAdmin, (req, res) => {
 
 router.delete('/messages/:id/delete', verifyAuth, verifyAdmin, (req, res) => {
     // called when DELETE /api/admin/messages/:id/delete
+    deleteMessage(req.params.id)
+
+    res.status(200).send({ message: 'Message deleted' })
 })
 
 router.get('/features', verifyAuth, verifyAdmin, (req, res) => {
@@ -75,6 +78,11 @@ async function lockUser(id) {
 
 async function unlockUser(id) {
     const SQL = `UPDATE \`Users\` SET locked = false WHERE ID = ${id}`
+    await sqlQuery(SQL)
+}
+
+async function deleteMessage(id) {
+    const SQL = `DELETE FROM \`Messages\` WHERE ID = ${id}`
     await sqlQuery(SQL)
 }
 
