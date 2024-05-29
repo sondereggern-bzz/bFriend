@@ -1,5 +1,5 @@
 /*
-  AUTHOR:              Robin Trachsel
+  AUTHOR:               Robin Trachsel
   DATE:                 28.05.2024
   DESCRIPTION:          JS-Server that links every JavaScript file together to build the backend
 */
@@ -7,7 +7,7 @@
 const express = require('express')
 const session = require('express-session')
 
-const authentification = require('./authentifizierung.js')
+const authentification = require('./authentification.js')
 const user = require('./users.js')
 const admin = require('./admin.js')
 const payments = require('./payments.js')
