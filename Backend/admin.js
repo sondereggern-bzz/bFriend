@@ -24,25 +24,23 @@
 */
 
 const express = require('express');
-const verifyAuth = require('./authentifizierung');
-const verifyAdmin = require('./authentifizierung');
+const verifyAuth = require('./authentification');
+const verifyAdmin = require('./authentification');
 
 const router = express.Router();
 
-router.get('/verify', verifyAuth, (req, res) => {
-  if (req.session.authenticated && req.session.userRole && req.session.userRole == "Admin") {
-    return res.status(200).send({ isAdmin: true });
-  } else {
-    return res.status(401).send({ isAdmin: false });
-  }
-})
-
 router.put('/users/:id/delete', verifyAuth, verifyAdmin, (req, res) => {
     // called when PUT /api/admin/users/:id/lock
+    lockUser(req.params.id)
+
+    res.status(200).send({ message: 'User locked' })
 })
 
 router.put('/users/:id/unlock', verifyAuth, verifyAdmin, (req, res) => {
     // called when PUT /api/admin/users/:id/unlock
+    unlockUser(req.params.id)
+
+    res.status(200).send({ message: 'User unlocked' })
 })
 
 router.delete('/messages/:id/delete', verifyAuth, verifyAdmin, (req, res) => {
@@ -68,5 +66,15 @@ router.put('/features/:id', verifyAuth, verifyAdmin, (req, res) => {
 router.delete('/features/:id', verifyAuth, verifyAdmin, (req, res) => {
     // called when DELETE /api/admin/features/:id
 })
+
+async function lockUser(id) {
+    const SQL = `UPDATE \`Users\` SET locked = true WHERE ID = ${id}`
+    await sqlQuery(SQL)
+}
+
+async function unlockUser(id) {
+    const SQL = `UPDATE \`Users\` SET locked = false WHERE ID = ${id}`
+    await sqlQuery(SQL)
+}
 
 module.exports = router
