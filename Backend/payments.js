@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
     }
 
     pool.query(
-        'INSERT INTO Payment (prename, name, iban, bic) VALUES (?, ?, ?, ?)',
+        'insert into Payment (prename, name, iban, bic) VALUES (?, ?, ?, ?)',
         [prename, name, iban, bic],
         (error, results) => {
             if (error) {
@@ -38,7 +38,7 @@ router.get('/:name', async (req, res) => {
     try {
         const response = await axios.get(`https://api.freecurrencyapi.com/v1/latest`, {
             params: {
-                apikey: process.env.CURRENCY_API_KEY,
+                apikey: process.env.CURRENCY_API_KEY || 'your_api_key',
                 base_currency: 'USD',
                 currencies: currencyName
             }
