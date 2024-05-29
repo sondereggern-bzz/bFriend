@@ -30,7 +30,6 @@ function verifyAuth(req, res, next) {
 
 function verifyAdmin(req, res, next) {
     if (req.session.authenticated && req.session.role == "Admin") {
-        console.log(req.session.role)
         next()
     } else {
         res.status(403).json({ error: 'Forbidden' })
