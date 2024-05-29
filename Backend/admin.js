@@ -28,6 +28,14 @@ const { verifyAuth, verifyAdmin } = require('./authentifizierung')
 
 const router = express.Router()
 
+router.get('/verify', verifyAuth, (req, res) => {
+  if (req.session.authenticated && req.session.userRole && req.session.userRole == "Admin") {
+    return res.status(200).send({ isAdmin: true });
+  } else {
+    return res.status(401).send({ isAdmin: false });
+  }
+})
+
 router.put('/users/:id/delete', verifyAuth, verifyAdmin, (req, res) => {
     // called when PUT /api/admin/users/:id/lock
 })
