@@ -22,6 +22,12 @@ const port = 3000
 app.use(session({ secret: 'geheim', resave: false, saveUninitialized: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+app.use((req, res, next) => {
+    console.log(`${req.method}\t${req.url}`)
+    next()
+})
+
 app.use('/api/authentification', authentification)
 app.use('/api/users', user)
 app.use('/api/admin', admin)
