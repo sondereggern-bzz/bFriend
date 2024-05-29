@@ -4,44 +4,34 @@ const axios = require('axios');
 const router = express.Router();
 const query = require('./database');
 
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'bfriend_database',
+router.get('/get', async (req, res) => {
+    try {
+        const results = await query('select * FROM Payment');
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
-
-
-router.get('/get', (req, res) => {
-    pool.query('SELECT * FROM Payment', (error, results) => {
-        if (error) {
-            console.error('Database error:', error);
-            return res.status(500).json({error: 'Internal server error'});
-        } else {
-            res.status(200).json(results);
-        }
-    });
-});
-
-// POST /api/payments
-router.post('/add', (req, res) => {
+// POST /matches/add
+router.post('/add', async (req, res) => {
     const { prename, name, iban, bic } = req.body;
 
     if (!prename || !name || !iban || !bic) {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const sql = 'insert into Payment (prename, name, iban, bic) VALUES (?, ?, ?, ?)';
+    const sql = 'INSERT INTO Payment (prename, name, iban, bic) VALUES (?, ?, ?, ?)';
     const params = [prename, name, iban, bic];
 
-    pool.query(sql, params, (error, results) => {
-        if (error) {
-            console.error('Database error:', error);
-            return res.status(500).json({ error: 'Internal server error' });
-        }
-        res.status(201).json({ message: 'Payment information added successfully', id: results.insertId });
-    });
+    try {
+        const result = await query(sql, params);
+        res.status(201).json({ message: 'Payment information added successfully', id: result.insertId });
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // GET /api/payments/:name
