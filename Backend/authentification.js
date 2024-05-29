@@ -29,7 +29,8 @@ function verifyAuth(req, res, next) {
 }
 
 function verifyAdmin(req, res, next) {
-    if (req.session.authenticated && req.session.userRole == "Admin") {
+    if (req.session.authenticated && req.session.role == "Admin") {
+        console.log(req.session.role)
         next()
     } else {
         res.status(403).json({ error: 'Forbidden' })
@@ -71,8 +72,8 @@ router.post('/login', async (req, res) => {
 
     if (user) {
         req.session.authenticated = true
-        req.session.userId = user.email
-        req.session.roleId = user.role;
+        req.session.email = user.email
+        req.session.role = user.role;
         // return the whole user
         res.status(200).json(user)
     } else {
@@ -91,7 +92,7 @@ router.delete('/logout', (req, res) => {
 });
 
 router.get('/verify', verifyAuth, (req, res) => {
-    res.status(200).json({ email: req.session.userId });
+    res.status(200).json({ email: req.session.email, role: req.session.role});
 });
 
 module.exports = [

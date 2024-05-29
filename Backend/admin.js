@@ -24,6 +24,7 @@
 */
 
 const express = require('express');
+const sqlQuery = require('./database');
 const verifyAuth = require('./authentification');
 const verifyAdmin = require('./authentification');
 
