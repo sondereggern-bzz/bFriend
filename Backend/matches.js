@@ -1,5 +1,5 @@
 /*
-  AUTHOR:              Robin Trachsel
+  AUTHOR:               Robin Trachsel
   DATE:                 28.05.2024
   DESCRIPTION:          JS-Server: Endpoints for /matches
 
@@ -10,7 +10,7 @@
 */
 
 const express = require('express')
-const verifyAuth = require('./authentifizierung')
+const verifyAuth = require('./authentification')
 
 const router = express.Router()
 

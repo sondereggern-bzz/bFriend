@@ -28,7 +28,7 @@
 */
 
 const express = require('express')
-const verifyAuth = require('./authentifizierung')
+const verifyAuth = require('./authentification')
 
 const router = express.Router()
 

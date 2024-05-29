@@ -9,11 +9,11 @@ const MYSQL = require('mysql');
 const credentials = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'MysRob04.',
+    password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'bfriend_database'
 }
 
-async function query(SQL) {
+async function sqlQuery(SQL) {
     return new Promise((resolve, reject) => {
         const CONNECTION = MYSQL.createConnection(
             credentials
@@ -30,4 +30,4 @@ async function query(SQL) {
     });
 }
 
-module.exports = query
+module.exports = sqlQuery;
