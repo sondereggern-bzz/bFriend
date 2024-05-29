@@ -24,39 +24,39 @@
 */
 
 const express = require('express')
-const verifyAuth = require('./authentifizierung')
+const { verifyAuth, verifyAdmin } = require('./authentifizierung')
 
 const router = express.Router()
 
-router.put('/users/:id/delete', verifyAuth, (req, res) => {
+router.put('/users/:id/delete', verifyAuth, verifyAdmin, (req, res) => {
     // called when PUT /api/admin/users/:id/lock
 })
 
-router.put('/users/:id/unlock', verifyAuth, (req, res) => {
+router.put('/users/:id/unlock', verifyAuth, verifyAdmin, (req, res) => {
     // called when PUT /api/admin/users/:id/unlock
 })
 
-router.delete('/messages/:id/delete', verifyAuth, (req, res) => {
+router.delete('/messages/:id/delete', verifyAuth, verifyAdmin, (req, res) => {
     // called when DELETE /api/admin/messages/:id/delete
 })
 
-router.get('/features', verifyAuth, (req, res) => {
+router.get('/features', verifyAuth, verifyAdmin, (req, res) => {
     // called when GET /api/admin/features
 })
 
-router.post('/features', verifyAuth, (req, res) => {
+router.post('/features', verifyAuth, verifyAdmin, (req, res) => {
     // called when POST /api/admin/features
 })
 
-router.get('/features/:id', verifyAuth, (req, res) => {
+router.get('/features/:id', verifyAuth, verifyAdmin, (req, res) => {
     // called when GET /api/admin/features/:id
 })
 
-router.put('/features/:id', verifyAuth, (req, res) => {
+router.put('/features/:id', verifyAuth, verifyAdmin, (req, res) => {
     // called when PUT /api/admin/features/:id
 })
 
-router.delete('/features/:id', verifyAuth, (req, res) => {
+router.delete('/features/:id', verifyAuth, verifyAdmin, (req, res) => {
     // called when DELETE /api/admin/features/:id
 })
 
