@@ -133,3 +133,15 @@ INSERT INTO `Role` (`name`) VALUES (`User`), (`Admin`);
 INSERT INTO `Subscription` (`name`, `price`) VALUES (`Free`, 0.00), (`Premium`, 9.99);
 
 INSERT INTO `Hobbies` (`name`) VALUES (`Sport`), (`Kochen`), (`Lesen`), (`Reisen`), (`Musik`), (`Kunst`), (`Tiere`), (`Garten`), (`Fotografie`), (`Handwerk`), (`Technik`), (`Gesundheit`), (`Essen`), (`Trinken`), (`Kino`), (`Theater`), (`Tanzen`), (`Schwimmen`), (`Wandern`), (`Fahrrad`), (`Motorrad`), (`Auto`), (`Fliegen`), (`Boot`), (`Angeln`), (`Jagen`), (`Schießen`), (`Klettern`), (`Tauchen`), (`Skifahren`), (`Snowboard`), (`Surfen`), (`Segeln`), (`Kajak`), (`Kanu`), (`Rudern`), (`Tennis`), (`Golf`), (`Fußball`), (`Basketball`), (`Volleyball`), (`Handball`), (`Tischtennis`), (`Badminton`), (`Bowling`), (`Billard`), (`Dart`), (`Schach`), (`Poker`), (`Bridge`), (`Backgammon`), (`Brettspiele`), (`Kartenspiele`), (`Computerspiele`), (`Konsolenspiele`), (`Handyspiele`), (`Online Spiele`), (`Social Media`), (`Blogging`), (`Vlogging`), (`Podcasting`), (`Streaming`), (`Fernsehen`), (`Radio`), (`Musikinstrumente`), (`Gesang`), (`Tanz`), (`Theater`), (`Kunst`), (`Malen`), (`Zeichnen`), (`Basteln`), (`Modellbau`), (`Nähen`), (`Stricken`), (`Häkeln`), (`Kochen`), (`Backen`), (`Grillen`), (`Barbecue`), (`Essen`), (`Trinken`), (`Cocktails`), (`Wein`), (`Bier`), (`Whisky`), (`Rum`), (`Gin`), (`Wodka`);
+
+INSERT INTO `Users` (`prename`, `name`, `email`, `password`, `addressID`, `genderID`, `roleID`, `subscriptionID`, `paymentID`) VALUES (`Max`, `Mustermann`, `max@muster.ch`, `1234`, 1, 1, 1, 1, 1);
+
+INSERT INTO `Address` (`street`, `houseNumber`, `cityID`, `country`) VALUES (`Musterstrasse`, `1`, 1, `Schweiz`);
+
+INSERT INTO `City` (`name`, `zip`) VALUES (`Musterstadt`, `1234`);
+
+INSERT INTO `Payment` (`prename`, `name`, `iban`, `bic`) VALUES (`Max`, `Mustermann`, `CH1234567890123456789`, `CHAS1234`);
+
+INSERT INTO `UserHobbies` (`userID`, `hobbyID`) VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6);
+
+INSERT INTO `UserImages` (`userID`, `image`) VALUES (1, `max.jpg`);
