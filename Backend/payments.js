@@ -39,7 +39,7 @@ router.get('/:name', async (req, res) => {
         const response = await axios.get(`https://api.freecurrencyapi.com/v1/latest`, {
             params: {
                 apikey: process.env.CURRENCY_API_KEY || 'your_api_key',
-                base_currency: 'USD',
+                base_currency: 'CHF',
                 currencies: currencyName
             }
         });
