@@ -1,12 +1,7 @@
 /*
   AUTHOR:               Robin Trachsel
   DATE:                 28.05.2024
-  DESCRIPTION:          JS-Server: Endpoints for /matches
-
-  Endpoints:
-  - "/"
-    GET: Get all matches
-    POST: Create a new match
+  DESCRIPTION:          To access the database
 */
 
 const MYSQL = require('mysql');
@@ -18,7 +13,7 @@ const credentials = {
     database: process.env.DB_NAME || 'bfriend_database'
 }
 
-async function query(SQL) {
+async function sqlQuery(SQL) {
     return new Promise((resolve, reject) => {
         const CONNECTION = MYSQL.createConnection(
             credentials
@@ -35,4 +30,4 @@ async function query(SQL) {
     });
 }
 
-module.exports = query
+module.exports = sqlQuery;
