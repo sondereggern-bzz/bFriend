@@ -34,6 +34,9 @@ const router = express.Router()
 
 router.get('', (req, res) => {
 	// called when GET /api/users
+	const result = getAllUsers()
+
+	res.status(200).json(result)
 })
 
 router.post('', (req, res) => {
@@ -72,4 +75,25 @@ router.put('/:id/payment', verifyAuth, (req, res) => {
 	// called when PUT /api/users/:id/payment
 })
 
-module.exports = router
+async function getAllUsers() {
+	const SQL = `SELECT 
+				Users.ID AS userID, Users.prename, Users.name, Users.email, Users.password, Users.locked, Users.created_at, Users.updated_at, Address.street, Address.houseNumber, City.name AS cityName, City.zip, Address.country, Gender.name AS gender, Role.name AS role, Subscription.name AS subscription, Subscription.price AS subscriptionPrice, Payment.prename AS paymentPrename, Payment.name AS paymentName, Payment.iban, Payment.bic, GROUP_CONCAT(DISTINCT Hobbies.name) AS hobbies, GROUP_CONCAT(DISTINCT UserImages.image) AS images
+				FROM Users
+				JOIN Address ON Users.addressID = Address.ID
+				JOIN City ON Address.cityID = City.ID
+				JOIN Gender ON Users.genderID = Gender.ID
+				JOIN Role ON Users.roleID = Role.ID
+				JOIN Subscription ON Users.subscriptionID = Subscription.ID
+				JOIN Payment ON Users.paymentID = Payment.ID
+				LEFT JOIN UserHobbies ON Users.ID = UserHobbies.userID
+				LEFT JOIN Hobbies ON UserHobbies.hobbyID = Hobbies.ID
+				LEFT JOIN UserImages ON Users.ID = UserImages.userID
+				GROUP BY Users.ID;
+`
+
+	const result = await sqlQuery(SQL)
+
+	return result
+}
+
+module.exports = router;
