@@ -7,7 +7,7 @@
 const express = require('express')
 const session = require('express-session')
 
-const authentification = require('./authentification.js')
+const authentification = require('./authentifizierung.js')
 const user = require('./users.js')
 const admin = require('./admin.js')
 const payments = require('./payments.js')
