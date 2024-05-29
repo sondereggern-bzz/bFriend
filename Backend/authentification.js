@@ -32,7 +32,7 @@ function verifyAdmin(req, res, next) {
     if (req.session.authenticated && req.session.userRole == "Admin") {
         next()
     } else {
-        return res.sendStatus()
+        res.status(403).json({ error: 'Forbidden' })
     }
 }
 

@@ -38,8 +38,8 @@ app.use('/api/subscriptions', subscriptions)
 app.use('/api/matches', matches)
 app.use('/api/search', search)
 
-app.get('*', (req, res) => {
-    res.status(404).send({ error: 'Endpoint not found' })
+app.use((req, res) => {
+    res.status(404).json({ error: 'Endpoint not found' })
 })
 
 app.listen(port, () => {
