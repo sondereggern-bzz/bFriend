@@ -16,6 +16,7 @@
 
 const express = require('express');
 const crypto = require("node:crypto");
+const sqlQuery = require('./database');
 
 const router = express.Router();
 
@@ -28,7 +29,7 @@ function verifyAuth(req, res, next) {
 }
 
 function verifyAdmin(req, res, next) {
-    if (req.session.authenticated && req.session.userRole && req.session.userRole == "Admin") {
+    if (req.session.authenticated && req.session.userRole == "Admin") {
         next()
     } else {
         return res.sendStatus()
@@ -36,42 +37,48 @@ function verifyAdmin(req, res, next) {
 }
 
 async function findLogin(email, password) {
-    const SQL = `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`
+    const SQL = `SELECT 
+                Users.ID AS userID, Users.prename, Users.name, Users.email, Users.password, Users.locked, Users.created_at, Users.updated_at, Address.street, Address.houseNumber, City.name AS cityName, City.zip, Address.country, Gender.name AS gender, Role.name AS role, Subscription.name AS subscription, Subscription.price AS subscriptionPrice, Payment.prename AS paymentPrename, Payment.name AS paymentName, Payment.iban, Payment.bic, GROUP_CONCAT(DISTINCT Hobbies.name) AS hobbies, GROUP_CONCAT(DISTINCT UserImages.image) AS images
+                FROM Users
+                JOIN Address ON Users.addressID = Address.ID
+                JOIN City ON Address.cityID = City.ID
+                JOIN Gender ON Users.genderID = Gender.ID
+                JOIN Role ON Users.roleID = Role.ID
+                JOIN Subscription ON Users.subscriptionID = Subscription.ID
+                JOIN Payment ON Users.paymentID = Payment.ID
+                LEFT JOIN UserHobbies ON Users.ID = UserHobbies.userID
+                LEFT JOIN Hobbies ON UserHobbies.hobbyID = Hobbies.ID
+                LEFT JOIN UserImages ON Users.ID = UserImages.userID
+                WHERE Users.email = '${email}' AND Users.password = '${password}'
+                GROUP BY Users.ID, Users.prename, Users.name, Users.email, Users.password, Users.locked, Users.created_at, Users.updated_at, Address.street, Address.houseNumber, City.name, City.zip, Address.country, Gender.name, Role.name, Subscription.name, Subscription.price, Payment.prename, Payment.name, Payment.iban, Payment.bic;`
+                
     const RESULT = await sqlQuery(SQL)
 
     return RESULT[0]
 }
 
-const sha256 = (key) => {
+function sha256(key) {
     return crypto.createHash('sha256').update(key).digest('hex');
 };
 
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email } = req.body
+    let { password } = req.body
+
+    password = sha256(password)
     
-    if (!username || !password) return res.sendStatus(422);
-    
-    password = sha256(password);
+    const user = await findLogin(email, password)
 
-    /* TODO: Switch this to use mysql connection package. */
-    const user = await queryUser(email, password);
-
-    if (!user) return res.status(401).send({ message: "Login has failed. Email or password is invalid." });
-
-    /* TODO: Fetch UserRole from Database */
-    const userRole = "User"; /* Roles: User, Admin */
-
-    let tries = 0;
-    while (!req.session.authenticated && !req.session.userId && tries < 3) {
-        req.session.authenticated = true;
-        req.session.userId = email;         /* email is assumed to be unique. */
-        req.session.userRole = userRole;
-        req.session.save();
-        tries++;
+    if (user) {
+        req.session.authenticated = true
+        req.session.userId = user.email
+        req.session.roleId = user.role;
+        // return the whole user
+        res.status(200).json(user)
+    } else {
+        res.status(401).json({ error: 'User and Password do not match' })
     }
-
-    return res.status(200).json({ email });
-});
+})
 
 router.delete('/logout', (req, res) => {
     req.session.destroy(error => {
