@@ -24,8 +24,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use((req, res, next) => {
-    console.log(`${req.method}\t${req.url}`)
-    next()
+    const date = new Date();
+    console.log(`[${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]\t${req.method}\t${req.path}`);
+    next();
 })
 
 app.use('/api/authentification', authentification)
