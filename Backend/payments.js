@@ -13,6 +13,17 @@ const pool = mysql.createPool({
 
 
 
+router.get('/get', (req, res) => {
+    pool.query('SELECT * FROM Payment', (error, results) => {
+        if (error) {
+            console.error('Database error:', error);
+            return res.status(500).json({error: 'Internal server error'});
+        } else {
+            res.status(200).json(results);
+        }
+    });
+});
+
 // POST /api/payments
 router.post('/add', (req, res) => {
     const { prename, name, iban, bic } = req.body;
