@@ -144,7 +144,7 @@ INSERT INTO `Payment` (`prename`, `name`, `iban`, `bic`) VALUES ("Max", "Musterm
 
 INSERT INTO `Address` (`street`, `houseNumber`, `cityID`, `country`) VALUES ("Musterstrasse", "1", 1, "Schweiz");
 
-INSERT INTO `Users` (`prename`, `name`, `email`, `password`, `addressID`, `genderID`, `roleID`, `subscriptionID`, `paymentID`) VALUES ("Max", "Mustermann", "max@muster.ch", "1234", 1, 1, 1, 1, 1);
+INSERT INTO `Users` (`prename`, `name`, `email`, `password`, `addressID`, `genderID`, `roleID`, `locked`, `subscriptionID`, `paymentID`) VALUES ("Max", "Mustermann", "max@muster.ch", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4", 1, 1, 2, FALSE, 1, 1);
 
 INSERT INTO `UserHobbies` (`userID`, `hobbyID`) VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6);
 
