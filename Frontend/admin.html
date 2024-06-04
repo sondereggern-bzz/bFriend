@@ -1,14 +1,23 @@
-<!-- TODO: Write the Admin Page -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/index.css">
-    <script src="./JS/admin.js"></script>
-    <title>Administration</title>
+    <title>bFriend Admin - Benutzerprofile beobachten</title>
+    <link rel="stylesheet" href="./CSS/admin.css">
 </head>
 <body>
-    
+    <div class="admin-container">
+        <h2>Benutzerprofile beobachten</h2>
+        <form id="searchForm">
+            <div class="input-group">
+                <label for="searchTerm">Suche nach vollständigem Namen oder Benutzer-ID:</label>
+                <input type="text" id="searchTerm" name="searchTerm" required oninput="filterUsers()">
+            </div>
+        </form>
+        <div id="userList"></div>
+        <div id="userProfile"></div>
+    </div>
+    <script src="./JS/admin.js"></script>
 </body>
 </html>
