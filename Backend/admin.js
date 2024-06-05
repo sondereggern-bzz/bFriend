@@ -24,11 +24,50 @@
 */
 
 const express = require('express');
-const sqlQuery = require('./database');
 const verifyAuth = require('./authentification');
 const verifyAdmin = require('./authentification');
 
+const { User, Messages } = require("./db/models");
+
 const router = express.Router();
+
+
+async function lockUser(id) {
+    let entity = await User.findOne({
+        ID: id
+    });
+    if (entity) {
+        entity = await User.updateOne(
+            { ID: id },
+            { $set: { locked: true } }
+        );
+    } else {
+        throw Error("User doesn't exist!");
+    }
+}
+
+async function unlockUser(id) {
+    let entity = await User.findOne({
+        ID: id
+    });
+    if (entity) {
+        entity = await User.updateOne(
+            { ID: id },
+            { $set: { locked: false } }
+        );
+    } else {
+        throw Error("User doesn't exist!");
+    }
+}
+
+async function deleteMessage(id) {
+    const result = await Messages.deleteOne({
+        ID: id
+    });
+    if (result.deletedCount === 0) {
+        throw Error("Message doesn't exist!");
+    }
+}
 
 router.put('/users/:id/lock', verifyAuth, verifyAdmin, (req, res) => {
     // called when PUT /api/admin/users/:id/lock
@@ -70,20 +109,5 @@ router.put('/features/:id', verifyAuth, verifyAdmin, (req, res) => {
 router.delete('/features/:id', verifyAuth, verifyAdmin, (req, res) => {
     // called when DELETE /api/admin/features/:id
 })
-
-async function lockUser(id) {
-    const SQL = `UPDATE \`Users\` SET locked = true WHERE ID = ${id}`
-    await sqlQuery(SQL)
-}
-
-async function unlockUser(id) {
-    const SQL = `UPDATE \`Users\` SET locked = false WHERE ID = ${id}`
-    await sqlQuery(SQL)
-}
-
-async function deleteMessage(id) {
-    const SQL = `DELETE FROM \`Messages\` WHERE ID = ${id}`
-    await sqlQuery(SQL)
-}
 
 module.exports = router
