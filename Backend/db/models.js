@@ -461,17 +461,17 @@ userSchema.pre("save", async (next) => {
             const maxIdEntity = await User.findOne().sort({ ID: -1 }).select("ID");
             this.ID = maxIdEntity ? maxIdEntity.ID + 1 : 1;
 
-            if (!this.address.country in countrys) {
+            /*if (!countrys.includes(this.address.country)) {
                 throw Error("That country doesn't exist!");
             };
 
-            if (!this.gender in genders){
+            if (!genders.includes(this.gender)){
                 throw Error("That country doesn't exist!");
             }
 
-            if (!this.role in roles){
+            if (!roles.includes(this.role)){
                 throw Error("That role doesn't exist!");
-            }
+            }*/
         } catch (error) {
             console.warn("[ERROR] :", error);
             return next(error);
