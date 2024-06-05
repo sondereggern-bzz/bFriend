@@ -1,12 +1,10 @@
 const express = require('express');
-const mysql = require('mysql2');
 const axios = require('axios');
 const router = express.Router();
-const query = require('./database');
 
 router.get('/get', async (req, res) => {
     try {
-        const results = await query('select * FROM Payment');
+        //const results = await query('select * FROM Payment'); //TODO: Use Mongodb
         res.status(200).json(results);
     } catch (error) {
         console.error('Database error:', error);
@@ -26,7 +24,7 @@ router.post('/add', async (req, res) => {
     const params = [prename, name, iban, bic];
 
     try {
-        const result = await query(sql, params);
+        //const result = await query(sql, params); //TODO: USE MONGODB
         res.status(201).json({ message: 'Payment information added successfully', id: result.insertId });
     } catch (error) {
         console.error('Database error:', error);
