@@ -18,6 +18,8 @@ const express = require('express');
 const crypto = require("node:crypto");
 const sqlQuery = require('./database');
 
+const { User } = require("./db/models");
+
 const router = express.Router();
 
 function verifyAuth(req, res, next) {
@@ -67,15 +69,15 @@ router.post('/login', async (req, res) => {
 
     password = sha256(password)
     
-    const user = await findLogin(email, password)
+    const entity = await User.findOne({ email: email});
 
-    if (user) {
+    if (entity.passwordHash == password){
         req.session.authenticated = true
-        req.session.email = user.email
-        req.session.role = user.role;
+        req.session.email = entity.email
+        req.session.role = entity.role;
         // return the whole user
-        res.status(200).json(user)
-    } else {
+        res.status(200).json(entity)
+    }else {
         res.status(401).json({ error: 'User and Password do not match' })
     }
 })
