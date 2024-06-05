@@ -18,95 +18,95 @@ DROP TABLE IF EXISTS `UserMessages`;
 DROP TABLE IF EXISTS `UserNotifications`;
 
 CREATE TABLE `Users` (
-	`ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `prename` VARCHAR(255) NOT NULL,
-    `name` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    `addressID` INTEGER NOT NULL,
-    `genderID` INTEGER NOT NULL,
-    `roleID` INTEGER NOT NULL,
-    `subscriptionID` INTEGER NOT NULL,
-    `paymentID` INTEGER NOT NULL,
-    `locked` BOOLEAN DEFAULT FALSE,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                         `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                         `prename` VARCHAR(255) NOT NULL,
+                         `name` VARCHAR(255) NOT NULL,
+                         `email` VARCHAR(255) NOT NULL,
+                         `password` VARCHAR(255) NOT NULL,
+                         `addressID` INTEGER NOT NULL,
+                         `genderID` INTEGER NOT NULL,
+                         `roleID` INTEGER NOT NULL,
+                         `subscriptionID` INTEGER NOT NULL,
+                         `paymentID` INTEGER NOT NULL,
+                         `locked` BOOLEAN DEFAULT FALSE,
+                         `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                         `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `Address` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `street` VARCHAR(255) NOT NULL,
-    `houseNumber` VARCHAR(255) NOT NULL,
-    `cityID` INTEGER NOT NULL,
-    `country` VARCHAR(255) NOT NULL
+                           `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                           `street` VARCHAR(255) NOT NULL,
+                           `houseNumber` VARCHAR(255) NOT NULL,
+                           `cityID` INTEGER NOT NULL,
+                           `country` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `City` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `name` VARCHAR(255) NOT NULL,
-    `zip` VARCHAR(255) NOT NULL
+                        `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                        `name` VARCHAR(255) NOT NULL,
+                        `zip` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `Gender` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `name` VARCHAR(255) NOT NULL
+                          `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                          `name` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `Role` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `name` VARCHAR(255) NOT NULL
+                        `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                        `name` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `Subscription` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `name` VARCHAR(255) NOT NULL,
-    `price` DECIMAL(10,2) NOT NULL
+                                `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                                `name` VARCHAR(255) NOT NULL,
+                                `price` DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE `UserHobbies` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `userID` INTEGER NOT NULL,
-    `hobbyID` INTEGER NOT NULL
+                               `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                               `userID` INTEGER NOT NULL,
+                               `hobbyID` INTEGER NOT NULL
 );
 
 CREATE TABLE `Hobbies` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `name` VARCHAR(255) NOT NULL
+                           `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                           `name` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `Payment` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `prename` VARCHAR(255) NOT NULL,
-    `name` VARCHAR(255) NOT NULL,
-    `iban` VARCHAR(255) NOT NULL,
-    `bic` VARCHAR(255) NOT NULL
+                           `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                           `prename` VARCHAR(255) NOT NULL,
+                           `name` VARCHAR(255) NOT NULL,
+                           `iban` VARCHAR(255) NOT NULL,
+                           `bic` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `UserImages` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `userID` INTEGER NOT NULL,
-    `image` VARCHAR(255) NOT NULL
+                              `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                              `userID` INTEGER NOT NULL,
+                              `image` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `UserMatches` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `userID` INTEGER NOT NULL,
-    `matchID` INTEGER NOT NULL
+                               `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                               `userID` INTEGER NOT NULL,
+                               `matchID` INTEGER NOT NULL
 );
 
 CREATE TABLE `UserMessages` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `userID` INTEGER NOT NULL,
-    `senderID` INTEGER NOT NULL,
-    `message` TEXT NOT NULL,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                                `userID` INTEGER NOT NULL,
+                                `senderID` INTEGER NOT NULL,
+                                `message` TEXT NOT NULL,
+                                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `UserNotifications` (
-    `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
-    `userID` INTEGER NOT NULL,
-    `message` TEXT NOT NULL,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                     `ID` INTEGER AUTO_INCREMENT, PRIMARY KEY (ID),
+                                     `userID` INTEGER NOT NULL,
+                                     `message` TEXT NOT NULL,
+                                     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE `Users` ADD FOREIGN KEY (`addressID`) REFERENCES `Address`(`ID`);
