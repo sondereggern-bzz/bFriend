@@ -392,6 +392,7 @@ const userSchema = new mongoose.Schema({
     locked: {
         type: Boolean,
         required: false,
+        default: false
     }
 }, { timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt'}});
 
