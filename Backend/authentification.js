@@ -77,5 +77,6 @@ router.get('/verify', verifyAuth, (req, res) => {
 module.exports = [
     router,
     verifyAuth,
-    verifyAdmin
+    verifyAdmin,
+    sha256
 ];
