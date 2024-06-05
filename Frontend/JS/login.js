@@ -1,37 +1,43 @@
 const BASE_URL = "http://localhost:3000";
 
 /* TODO: Finish this function */
-const login = (email, password) => {
-    fetch(`${BASE_URL}/api/authentification/login`,{
-        method: "POST",
-        body: {
-            email: email,
-            password: password
-        }
-    }).then(response => {
+const login = async (email, password) => {
+    try {
+        const response = await fetch(`${BASE_URL}/api/authentification/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+
         if (response.ok) {
-            return response.json(); // TODO: Handle whatever is sent back by API
-        } else if (response.error) {
-            console.warn("An error occurd while logging in!");
-            return null;
+            const user = await response.json();
+            return user;
         } else {
-            return response.json(); // TODO: Handle whatever is sent back by API
+            console.warn("An error occurred while logging in!");
+            return null;
         }
-    }).catch(error => {
-        console.warn(`An error occurd while logging in!\n\n${error}`);
+    } catch (error) {
+        console.warn(`An error occurred while logging in!\n\n${error}`);
         return null;
-    })
+    }
 };
 
-/* TODO: Add Event Listener and handle the login */
-document.getElementById("loginForm").addEventListener("submit", (event) => {
+document.getElementById("loginForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const message = document.getElementById("message");
     
-    if (login(email, password)) {
+    const user = await login(email, password);
+    
+    console.log(user)
+    if (user) {
         message.style.color = "green";
         message.textContent = "Success!";
         /* TODO: Redirect */
@@ -40,4 +46,3 @@ document.getElementById("loginForm").addEventListener("submit", (event) => {
         message.textContent = "Invalid username or password.";
     }
 });
-
