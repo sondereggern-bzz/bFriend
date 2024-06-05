@@ -29,10 +29,51 @@
 
 const express = require('express')
 const verifyAuth = require('./authentification')
+const sha256 = require("./authentification");
 
 const { User } = require("./db/models");
 
 const router = express.Router()
+
+
+async function registerUser(firstname, lastname, email, passwordHash, address, gender, hobbies) {
+    try {
+        const defaultSubscription = {
+            name: "Free",
+            price: 0
+        };
+
+        const defaultPayment = {
+            fullname: "",
+            iban: "",
+            bic: ""
+        };
+
+        if (!firstname || !lastname || !email || !passwordHash || !address || !gender || !hobbies) {
+            throw new Error("Missing required user data.");
+        }
+
+        const userRole = "user";
+        const userSubscription = defaultSubscription;
+        const userPayment = defaultPayment;
+
+        const mergedUserData = {
+            ...userData,
+            role: userRole,
+            subscription: userSubscription,
+            payment: userPayment,
+			notifications: []
+        };
+
+        const newUser = await User.create(mergedUserData);
+        console.log("User registered successfully:", newUser);
+
+        return newUser;
+    } catch (error) {
+        console.error("Error registering user:", error.message);
+        throw error;
+    }
+}
 
 router.get('/', (req, res) => {
 	// called when GET /api/users
@@ -41,8 +82,39 @@ router.get('/', (req, res) => {
 	//res.status(200).json(result)
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
 	// called when POST /api/users
+	const { firstname, lastname, email, password, address, gender, hobbies } = req.body;
+	
+	const isEmailUsed = User.findOne({
+		email: email
+	});
+
+	if (isEmailUsed) {
+		return res.status(400).send("Email is already used!");
+	}
+
+	// TODO: Data Validation
+
+	password = sha256(password);
+
+	try {
+		const newUser = await registerUser(firstname, lastname, email, password, address, gender, hobbies)
+		
+		if (newUser) {
+			const data = {
+				id: newUser.ID,
+				email: newUser.email,
+				role: newUser.role
+			}
+			return res.status(200).send(data);
+		} else {
+			return res.status(500).send("An error occurd while registering the user.");
+		}
+	} catch(error) {
+		console.warn(error);
+		return res.status(500).send("An error occurd while registering the user.");
+	}
 })
 
 router.get('/:id', async (req, res) => {
