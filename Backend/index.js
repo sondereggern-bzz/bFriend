@@ -6,6 +6,7 @@
 
 const express = require('express')
 const session = require('express-session')
+const cors = require('cors')
 
 const mongoose = require('mongoose');
 const { Images, Matches, Messages, User } = require('./db/models')
@@ -43,6 +44,7 @@ const port = 3000
 
 runDBConnection();
 
+app.use(cors({origin: "*"}))
 app.use(session({ secret: 'geheim', resave: false, saveUninitialized: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
