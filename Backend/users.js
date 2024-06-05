@@ -30,21 +30,42 @@
 const express = require('express')
 const verifyAuth = require('./authentification')
 
+const { User } = require("./db/models");
+
 const router = express.Router()
 
-router.get('', (req, res) => {
+router.get('/', (req, res) => {
 	// called when GET /api/users
-	const result = getAllUsers()
+	//const result = getAllUsers()
 
-	res.status(200).json(result)
+	//res.status(200).json(result)
 })
 
-router.post('', (req, res) => {
+router.post('/', (req, res) => {
 	// called when POST /api/users
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
 	// called when GET /api/users/:id
+	const id = req.params.id;
+	console.log(id)
+
+	const entity = await User.findOne({
+		ID: id
+	});
+
+	if (!entity) {
+		return res.status(404).send({ message: "An invalid id has been given."});
+	}
+
+	const data = {
+		firstname: entity.firstname,
+		lastname: entity.lastname,
+		email: entity.email,
+		role: entity.role,
+	};
+	
+	return res.status(200).send(data);
 })
 
 router.put('/:id', verifyAuth, (req, res) => {
