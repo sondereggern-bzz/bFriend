@@ -12,11 +12,18 @@
         <form id="searchForm">
             <div class="input-group">
                 <label for="searchTerm">Suche nach vollständigem Namen oder Benutzer-ID:</label>
-                <input type="text" id="searchTerm" name="searchTerm" required oninput="filterUsers()">
+                <input type="text" id="searchTerm" name="searchTerm" required>
             </div>
+            <button type="submit">Suchen</button>
         </form>
-        <div id="userList"></div>
-        <div id="userProfile"></div>
+        <div class="flex-container">
+            <div id="userList" class="user-list"></div>
+            <div id="userProfile" class="user-profile"></div>
+        </div>
+        <div class="pagination">
+            <button id="prevPage">Previous Page</button>
+            <button id="nextPage">Next Page</button>
+        </div>        
     </div>
     <script src="./JS/admin.js"></script>
 </body>

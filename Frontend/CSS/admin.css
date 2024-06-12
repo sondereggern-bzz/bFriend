@@ -14,11 +14,12 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 400px;
+    width: 800px;
 }
 
 h2 {
     margin-bottom: 20px;
+    color: #333333;
 }
 
 .input-group {
@@ -29,6 +30,7 @@ h2 {
 .input-group label {
     display: block;
     margin-bottom: 5px;
+    color: #333333;
 }
 
 .input-group input {
@@ -51,9 +53,22 @@ button:hover {
     background-color: #45a049;
 }
 
-#userList, #userProfile {
-    margin-top: 20px;
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-list, .user-profile {
+    width: 48%;
+    padding: 10px;
     text-align: left;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.user-list {
+    margin-right: 10px;
 }
 
 .user-item {
@@ -63,13 +78,39 @@ button:hover {
 }
 
 .user-item:hover {
-    background-color: #f0f0f0;
+    background-color: #e0e0e0;
 }
 
 #userProfile h3 {
     margin-bottom: 10px;
+    color: #333333;
 }
 
 #userProfile p {
     margin: 5px 0;
+    color: #666666;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.pagination button:hover {
+    background-color: #45a049;
+}
+
+#prevPage, #nextPage {
+    width: auto;
 }
