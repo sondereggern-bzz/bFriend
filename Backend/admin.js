@@ -29,7 +29,7 @@ const verifyAdmin = require('./authentification');
 
 const sqlQuery = require("./mysql/database");
 
-const { User, Messages } = require("./db/models");
+const { User, Messages } = require("./mongodb/models");
 
 const router = express.Router();
 
