@@ -34,7 +34,7 @@ const sha256 = require("./authentification");
 
 const sqlQuery = require("./mysql/database");
 
-const { User } = require("./mongodb/models");
+const { User } = require("../Database/mongodb/models");
 
 const router = express.Router()
 
