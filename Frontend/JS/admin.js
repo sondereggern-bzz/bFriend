@@ -119,6 +119,7 @@ const filterUsers = async () => {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    updateCurrentPageText();
     data = await getAllData();
     data = data.sort((a, b) => a.ID - b.ID);
 
@@ -144,3 +145,31 @@ document.getElementById("searchForm").addEventListener("submit", async (event) =
         userProfile.style.display = "block";
     }
 });
+
+const updateCurrentPageText = () => {
+    const currentPageText = document.getElementById("currentPageText");
+    currentPageText.textContent = `Page ${currentPage}`;
+};
+
+const nextPage = async () => {
+    currentPage++;
+    updateCurrentPageText();
+    await fetchData();
+};
+
+const prevPage = async () => {
+    if (currentPage > 1) {
+        currentPage--;
+        updateCurrentPageText();
+        await fetchData();
+    }
+};
+
+const fetchData = async () => {
+    data = await getAllData();
+    data = data.sort((a, b) => a.ID - b.ID);
+    displayUsers(data);
+};
+
+document.getElementById("nextPage").addEventListener("click", nextPage);
+document.getElementById("prevPage").addEventListener("click", prevPage);

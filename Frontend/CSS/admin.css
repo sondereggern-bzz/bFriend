@@ -95,6 +95,7 @@ button:hover {
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    align-items: center; /* Added */
 }
 
 .pagination button {
@@ -113,4 +114,10 @@ button:hover {
 
 #prevPage, #nextPage {
     width: auto;
+}
+
+#currentPageText {
+    margin: 0 10px; /* Added */
+    color: #333333; /* Added */
+    font-weight: bold; /* Added */
 }
