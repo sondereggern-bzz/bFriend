@@ -166,7 +166,7 @@ const prevPage = async () => {
 };
 
 const fetchData = async () => {
-    data = await getAllData();
+    data = await filterUsers();
     data = data.sort((a, b) => a.ID - b.ID);
     displayUsers(data);
 };
