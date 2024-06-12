@@ -28,7 +28,7 @@ const usersData = [
             iban: 'IBAN1234567890',
             bic: 'BIC987654321'
         },
-        hobbies: ['Sport', 'Reading', 'Music'], // Corrected field name
+        hobbys: ['Sport', 'Lesen', 'Fotografie'],
         notifications: [{ message: 'Welcome to our platform!' }]
     },
     {
@@ -54,7 +54,7 @@ const usersData = [
             iban: 'IBAN0987654321',
             bic: 'BIC123456789'
         },
-        hobbies: ['Traveling', 'Photography', 'Cooking'], // Corrected field name
+        hobbys: ['Reisen', 'Fotografie', 'Kochen'],
         notifications: [{ message: 'Welcome to our platform!' }]
     }
 ];

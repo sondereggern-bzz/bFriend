@@ -385,8 +385,7 @@ const userSchema = new mongoose.Schema({
             "Rum",
             "Gin",
             "Wodka"
-        ],
-        default: []
+        ]
     },
     notifications: [notificationElementSchema],
     locked: {
@@ -461,6 +460,10 @@ userSchema.pre("save", async (next) => {
         try {
             const maxIdEntity = await User.findOne().sort({ ID: -1 }).select("ID");
             this.ID = maxIdEntity ? maxIdEntity.ID + 1 : 1;
+
+            if (this.hobbys == undefined || this.hobbys == null) {
+                this.hobbys = [];
+            }
 
             /*if (!countrys.includes(this.address.country)) {
                 throw Error("That country doesn't exist!");
