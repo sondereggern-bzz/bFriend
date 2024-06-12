@@ -19,7 +19,7 @@ const crypto = require("node:crypto");
 
 const sqlQuery = require("./mysql/database");
 
-const { User } = require("../Database/mongodb/models");
+const { User } = require("./mongodb/models");
 
 const router = express.Router();
 
