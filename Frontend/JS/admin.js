@@ -1,6 +1,5 @@
 const BASE_URL = "http://localhost:3000";
 
-/* TODO: Finish integration and all */
 let data;
 let userList;
 let userProfile;
