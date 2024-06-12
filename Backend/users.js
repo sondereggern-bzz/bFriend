@@ -32,7 +32,9 @@ const verifyAuth = require('./authentification')
 const verifyAdmin = require("./authentification");
 const sha256 = require("./authentification");
 
-const { User } = require("./db/models");
+const sqlQuery = require("./mysql/database");
+
+const { User } = require("../Database/mongodb/models");
 
 const router = express.Router()
 
@@ -78,6 +80,12 @@ async function registerUser(firstname, lastname, email, passwordHash, address, g
 
 router.get('/', async (req, res) => { // TODO: Discuss if admin only
 	// called when GET /api/users
+
+	/* MySQL
+	const result = getAllUsers()
+	res.status(200).json(result)
+	 */
+
 	const allUsers = await User.find({});
 	return res.status(200).send(allUsers);
 })

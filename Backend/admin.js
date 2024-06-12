@@ -27,12 +27,18 @@ const express = require('express');
 const verifyAuth = require('./authentification');
 const verifyAdmin = require('./authentification');
 
-const { User, Messages } = require("./db/models");
+const sqlQuery = require("./mysql/database");
+
+const { User, Messages } = require("../Database/mongodb/models");
 
 const router = express.Router();
 
 
 async function lockUser(id) {
+    /* MySQL
+    const SQL = `UPDATE \`Users\` SET locked = true WHERE ID = ${id}`
+    await sqlQuery(SQL)
+    */
     let entity = await User.findOne({
         ID: id
     });
@@ -47,6 +53,10 @@ async function lockUser(id) {
 }
 
 async function unlockUser(id) {
+    /* MySQL
+    const SQL = `UPDATE \`Users\` SET locked = false WHERE ID = ${id}`
+    await sqlQuery(SQL)
+    */
     let entity = await User.findOne({
         ID: id
     });
@@ -61,6 +71,10 @@ async function unlockUser(id) {
 }
 
 async function deleteMessage(id) {
+    /* MySQL
+    const SQL = `DELETE FROM \`Messages\` WHERE ID = ${id}`
+    await sqlQuery(SQL)
+    */
     const result = await Messages.deleteOne({
         ID: id
     });
