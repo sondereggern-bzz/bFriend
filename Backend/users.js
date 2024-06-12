@@ -78,17 +78,53 @@ async function registerUser(firstname, lastname, email, passwordHash, address, g
     }
 }
 
-router.get('/', async (req, res) => { // TODO: Discuss if admin only
-	// called when GET /api/users
+router.get('/', async (req, res) => {
+    // called when GET /api/users
 
-	/* MySQL
-	const result = getAllUsers()
-	res.status(200).json(result)
-	 */
+    let page = parseInt(req.query.page) || 1;
+    let amount = parseInt(req.query.amount) || 100;
+    let filter = req.query.filter || '';
+	const filter_type = req.query.filtertype || '';
 
-	const allUsers = await User.find({});
-	return res.status(200).send(allUsers);
-})
+    let data;
+
+    try {
+		let query = {};
+
+        if (filter) {
+			if (filter_type == "string") {
+                query = {
+					$or: [
+						{ firstname: { $regex: new RegExp('.*' + filter + '.*', 'i') } },
+						{ lastname: { $regex: new RegExp('.*' + filter + '.*', 'i') } }
+					],
+				}
+			} else if (filter_type == "number") {
+				const id = parseInt(filter);
+				query = {
+					ID: id
+				}
+			} else {
+				// etc.
+			}
+        }
+
+        const skip = (page - 1) * amount;
+        const limit = amount;
+
+        const filteredUsers = await User.find(query).skip(skip).limit(limit).sort({ ID: 1 });
+
+        data = filteredUsers;
+        
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return res.status(500).json({ error: "An error occurred while fetching users." });
+    }
+});
+
+
+
 
 router.post('/', async (req, res) => {
 	// called when POST /api/users
@@ -128,7 +164,6 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 	// called when GET /api/users/:id
 	const id = req.params.id;
-	console.log(id)
 
 	const entity = await User.findOne({
 		ID: id
@@ -145,7 +180,7 @@ router.get('/:id', async (req, res) => {
 		role: entity.role,
 	};
 	
-	return res.status(200).send(data);
+	return res.status(200).send(entity);
 })
 
 router.put('/:id', verifyAuth, (req, res) => {
