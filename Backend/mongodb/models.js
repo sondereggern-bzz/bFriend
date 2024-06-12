@@ -259,6 +259,17 @@ const notificationElementSchema = new mongoose.Schema({
     }
 });
 
+const featureSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    active: {
+        type: Boolean,
+        required: true
+    }
+});
+
 /* User Schema */
 const userSchema = new mongoose.Schema({
     ID: {
@@ -387,6 +398,7 @@ const userSchema = new mongoose.Schema({
             "Wodka"
         ]
     },
+    features: [featureSchema],
     notifications: [notificationElementSchema],
     locked: {
         type: Boolean,

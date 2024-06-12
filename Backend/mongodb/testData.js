@@ -29,6 +29,16 @@ const usersData = [
             bic: 'BIC987654321'
         },
         hobbys: ['Sport', 'Lesen', 'Fotografie'],
+        features: [
+            {
+                name: 'Messaging',
+                active: true
+            },
+            {
+                name: 'Premium',
+                active: true
+            }
+        ],
         notifications: [{ message: 'Welcome to our platform!' }]
     },
     {
@@ -55,6 +65,16 @@ const usersData = [
             bic: 'BIC123456789'
         },
         hobbys: ['Reisen', 'Fotografie', 'Kochen'],
+        features: [
+            {
+                name: 'Messaging',
+                active: true
+            },
+            {
+                name: 'Basic',
+                active: true
+            }
+        ],
         notifications: [{ message: 'Welcome to our platform!' }]
     }
 ];
