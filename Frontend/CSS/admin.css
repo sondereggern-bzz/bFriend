@@ -4,8 +4,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .admin-container {
@@ -14,7 +17,8 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 800px;
+    width: 100%;
+    height: 100%;
 }
 
 h2 {
@@ -39,7 +43,7 @@ h2 {
     box-sizing: border-box;
 }
 
-button {
+button[type=submit] {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -47,6 +51,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    margin-bottom: 1rem;
 }
 
 button:hover {
@@ -56,6 +61,7 @@ button:hover {
 .flex-container {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .user-list, .user-profile {
@@ -81,6 +87,12 @@ button:hover {
     background-color: #e0e0e0;
 }
 
+#userProfile {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 #userProfile h3 {
     margin-bottom: 10px;
     color: #333333;
@@ -91,11 +103,45 @@ button:hover {
     color: #666666;
 }
 
+#userProfile div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0.75rem;
+    margin-bottom: 10px;
+}
+
+#userProfile div h4, #userProfile div h5 {
+    color: #333333;
+    margin-top: 0;
+}
+
+#userProfile div h5 {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.subscription p {
+    margin: 10px 0;
+}
+
+.subscription ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subscription li {
+    margin-bottom: 5px;
+}
+
 .pagination {
     margin-top: 20px;
     display: flex;
     justify-content: center;
-    align-items: center; /* Added */
+    align-items: center;
 }
 
 .pagination button {
@@ -117,7 +163,7 @@ button:hover {
 }
 
 #currentPageText {
-    margin: 0 10px; /* Added */
-    color: #333333; /* Added */
-    font-weight: bold; /* Added */
+    margin: 0 10px;
+    color: #333333;
+    font-weight: bold;
 }
